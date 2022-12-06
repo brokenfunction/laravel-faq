@@ -18,3 +18,4 @@ Route::get('/', function () {
 })->name('index');
 
 Route::resource('questions', 'QuestionController');
+Route::resource('answers', 'AnswerController', ['except' => ['index', 'create', 'show']]);
