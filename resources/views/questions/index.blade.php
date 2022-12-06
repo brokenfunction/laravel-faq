@@ -1,9 +1,12 @@
 @extends('template')
 
 @section('content')
-    <h3 class="pb-4 mb-4 fst-italic border-bottom">
-        All Questions
-    </h3>
+    <div class="row border-bottom pb-4 mb-4">
+        <div class="col-6"><h3 class=" fst-italic">
+                All Questions
+            </h3></div>
+        <div class="col-6">total {{$questions->total()}}</div>
+    </div>
     @foreach($questions as $question)
         <div class="card mb-4">
             <div class="card-body">
@@ -12,6 +15,11 @@
 
                 <a href="{{ route('questions.show', $question->id) }}" class="card-link">View Details</a>
             </div>
+            <div class="card-footer text-muted">
+                {{ $question->created_at->diffForHumans() }}
+            </div>
         </div>
     @endforeach
+    {{ $questions->links() }}
+
 @endsection
