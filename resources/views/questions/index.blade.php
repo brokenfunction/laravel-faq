@@ -1,4 +1,4 @@
-@extends('template')
+@extends('layouts.app')
 
 @section('content')
     <div class="border-bottom pb-4 mb-4">

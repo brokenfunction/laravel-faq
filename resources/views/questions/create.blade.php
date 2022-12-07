@@ -1,9 +1,9 @@
-@extends('template')
+@extends('layouts.app')
 
 @section('content')
     <div class="row">
         <form method="POST" action="{{ route('questions.store') }}">
-            {{ csrf_field() }}
+            @csrf
             <div class="form-group mb-3">
                 <label for="title" class="col-sm-2 col-form-label">Title:</label>
                 <div class="col-6">

@@ -1,4 +1,4 @@
-@extends('template')
+@extends('layouts.app')
 
 @section('content')
     <h1>{{ $question->title }}</h1>
@@ -17,7 +17,7 @@
     @endif
 
     <form method="POST" action="{{ route('answers.store') }}">
-        {{ csrf_field() }}
+        @csrf
         <div class="form-group mb-3">
             <label for="description" class="col-sm-2 col-form-label">Submit Your Own Answer:</label>
             <div class="col-6">
