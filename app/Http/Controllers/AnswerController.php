@@ -66,6 +66,14 @@ class AnswerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $answer = Answer::findOrFail($id);
+        if ($answer->user->id !== Auth::id()) {
+            return abort(403);
+        }
+        if ($answer->delete()) {
+            return redirect()->back();
+        } else {
+            return redirect()->route('questions.index');
+        }
     }
 }

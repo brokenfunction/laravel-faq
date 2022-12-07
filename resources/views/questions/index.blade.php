@@ -18,7 +18,7 @@
     @foreach($questions as $question)
         <div class="card mb-4">
             <div class="card-header">
-                <div class="row justify-content-between">
+                <div class="row">
                     <div class="col">
                         {{ $question->user->name }} asked {{ $question->created_at->diffForHumans() }}
                     </div>
