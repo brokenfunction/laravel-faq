@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -42,7 +48,7 @@ class QuestionController extends Controller
         $question = new Question();
         $question->title = $request->title;
         $question->description = $request->description;
-        $question->save();
+        $question->user()->associate(Auth::id());
 
         if ($question->save()) {
             return redirect()->route('questions.show', $question->id);
@@ -67,11 +73,15 @@ class QuestionController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
-        //
+        $question = Question::findOrFail($id);
+        if ($question->user->id !== Auth::id()) {
+            return abort(403);
+        }
+        return view('questions.edit')->with('question', $question);
     }
 
     /**
@@ -83,7 +93,22 @@ class QuestionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $question = Question::findOrFail($id);
+        if ($question->user->id !== Auth::id()) {
+            return abort(403);
+        }
+        $this->validate($request, [
+            'title' => 'required|max:255'
+        ]);
+        $question->title = $request->title;
+        $question->description = $request->description;
+
+        if ($question->save()) {
+            return redirect()->route('questions.show', $question);
+        } else {
+            return redirect()->route('questions.update', $question);
+        }
+
     }
 
     /**
@@ -94,6 +119,14 @@ class QuestionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $question = Question::findOrFail($id);
+        if ($question->user->id !== Auth::id()) {
+            return abort(403);
+        }
+        if ($question->delete()) {
+            return redirect()->route('questions.index');
+        } else {
+            return redirect()->route('questions.show', $question);
+        }
     }
 }
