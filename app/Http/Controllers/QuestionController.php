@@ -38,12 +38,12 @@ class QuestionController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
         $this->validate($request, [
-           'title' => 'required|max:255'
+           'title' => 'required|max:255|min:15'
         ]);
         $question = new Question();
         $question->title = $request->title;
@@ -51,8 +51,12 @@ class QuestionController extends Controller
         $question->user()->associate(Auth::id());
 
         if ($question->save()) {
+            session()->flash('message', 'Question successfully created.');
+            session()->flash('class', 'success');
             return redirect()->route('questions.show', $question->id);
         } else {
+            session()->flash('message', 'Something went wrong.');
+            session()->flash('class', 'warning');
             return redirect()->route('questions.create');
         }
     }
@@ -61,7 +65,7 @@ class QuestionController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show($id)
     {
@@ -89,7 +93,7 @@ class QuestionController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
@@ -98,15 +102,19 @@ class QuestionController extends Controller
             return abort(403);
         }
         $this->validate($request, [
-            'title' => 'required|max:255'
+            'title' => 'required|max:255|min:15'
         ]);
         $question->title = $request->title;
         $question->description = $request->description;
 
         if ($question->save()) {
+            session()->flash('message', 'Question successfully updated.');
+            session()->flash('class', 'success');
             return redirect()->route('questions.show', $question);
         } else {
-            return redirect()->route('questions.update', $question);
+            session()->flash('message', 'Something went wrong.');
+            session()->flash('class', 'warning');
+            return redirect()->route('questions.edit', $question->id);
         }
 
     }
@@ -115,7 +123,7 @@ class QuestionController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
@@ -124,8 +132,12 @@ class QuestionController extends Controller
             return abort(403);
         }
         if ($question->delete()) {
+            session()->flash('message', 'Question successfully deleted.');
+            session()->flash('class', 'success');
             return redirect()->route('questions.index');
         } else {
+            session()->flash('message', 'Something went wrong.');
+            session()->flash('class', 'warning');
             return redirect()->route('questions.show', $question);
         }
     }

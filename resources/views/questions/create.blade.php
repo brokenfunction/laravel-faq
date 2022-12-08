@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    @include('components.alert')
     <div class="row">
         <div class="alert alert-secondary" id="liveAlertBtn" role="alert">
             <h4 class="mb-1">
@@ -23,7 +24,10 @@
             <div class="form-group mb-3">
                 <label for="title" class="col-12 col-form-label">Title:</label>
                 <div class="col-12">
-                    <input type="text" placeholder="e.g. Is there an R function for finding the index of an element in a vector?" name="title" class="form-control" id="title">
+                    <input type="text" required placeholder="e.g. Is there an R function for finding the index of an element in a vector?" name="title" class="form-control @error('title') is-invalid @enderror" id="title">
+                    <div class="invalid-feedback">
+                        The title must be at least 15 characters.
+                    </div>
                 </div>
             </div>
             <div class="form-group mb-3">

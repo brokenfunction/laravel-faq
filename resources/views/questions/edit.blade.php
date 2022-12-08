@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    @include('components.alert')
     <div class="row">
         <form method="POST" action="{{ route('questions.update', $question->id) }}">
             @csrf
@@ -8,7 +9,10 @@
             <div class="form-group mb-3">
                 <label for="title" class="col-12 col-form-label">Title:</label>
                 <div class="col-12">
-                    <input type="text" value="{{ $question->title }}" name="title" class="form-control" id="title">
+                    <input type="text" value="{{ $question->title }}" name="title" class="form-control @error('title') is-invalid @enderror" id="title">
+                    <div class="invalid-feedback">
+                        The title must be at least 15 characters.
+                    </div>
                 </div>
             </div>
             <div class="form-group mb-3">

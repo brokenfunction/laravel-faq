@@ -15,6 +15,7 @@
             </div>
         </div>
     </div>
+    @include('components.alert')
     @foreach($questions as $question)
         <div class="card mb-4">
             <div class="card-header">

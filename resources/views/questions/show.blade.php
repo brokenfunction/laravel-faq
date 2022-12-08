@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    @include('components.alert')
     <h1 class="display-6">{{ $question->title }}</h1>
     <p class="lead">{{ $question->description }}</p>
     <hr />
@@ -69,7 +70,10 @@
         <div class="form-group mb-3">
             <label for="description" class="col-sm-2 col-form-label">Your Answer</label>
             <div class="col-12">
-                <textarea rows="4" style="overflow:auto;resize:none;background: #fff;" name="content" class="form-control" id="description"></textarea>
+                <textarea rows="6" style="overflow:auto;resize:none;background: #fff;" name="content" class="form-control @error('content') is-invalid @enderror" id="description"></textarea>
+                <div class="invalid-feedback">
+                    The answer must be at least 15 characters.
+                </div>
             </div>
         </div>
         <input type="hidden" value="{{ $question->id }}" name="question_id">
