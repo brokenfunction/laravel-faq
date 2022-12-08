@@ -10,6 +10,12 @@
                     <a class="nav-link {{ (Request::is('questions')) ? 'active' : '' }}" href="{{ route('questions.index') }}">Questions</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link disabled">Tags</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled">Users</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link disabled">About</a>
                 </li>
             </ul>
@@ -42,6 +48,9 @@
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
+                            </a>
+                            <a class="dropdown-item" href="{{ route('profile', Auth::id()) }}">
+                                {{ __('Profile') }}
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

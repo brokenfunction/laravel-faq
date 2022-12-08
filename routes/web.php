@@ -23,3 +23,4 @@ Route::resource('answers', 'AnswerController', ['except' => ['index', 'create', 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/profile/{user}', [App\Http\Controllers\UserController::class, 'profile'])->name('profile');
