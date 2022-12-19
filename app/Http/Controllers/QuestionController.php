@@ -47,7 +47,7 @@ class QuestionController extends Controller
         ]);
         $question = new Question();
         $question->title = $request->title;
-        $question->description = $request->description;
+        $question->description = strip_tags($request->description, ['a', 'p', 'ul', 'ol', 'li', 'code', 'b', 'strong', 'em', 'span', 'blockquote']);
         $question->user()->associate(Auth::id());
 
         if ($question->save()) {

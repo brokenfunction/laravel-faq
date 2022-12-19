@@ -28,7 +28,7 @@ class AnswerController extends Controller
         ]);
 
         $answer = new Answer();
-        $answer->content = $request->content;
+        $answer->content = strip_tags($request->content, ['a', 'p', 'ul', 'ol', 'li', 'code', 'b', 'strong', 'em', 'span', 'blockquote']);
         $answer->user()->associate(Auth::id());
         $question = Question::findOrFail($request->question_id);
         $question->answers()->save($answer);

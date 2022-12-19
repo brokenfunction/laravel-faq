@@ -9,6 +9,17 @@ class Question extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'title',
+        'description',
+        'resolved'
+    ];
+
     public function answers()
     {
         return $this->hasMany(Answer::class);

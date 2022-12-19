@@ -2,11 +2,11 @@
 
 @section('content')
     <div class="border-bottom pb-2 mb-4">
-        <div class="row">
+        <div class="row align-items-center">
             <div class="col-6">
-                <h3 class="fst-italic">
+                <h1 class="fw-semibold">
                     All Questions
-                </h3>
+                </h1>
             </div>
             <div class="col-6 text-end">
                 <p class="badge bg-primary">
@@ -17,7 +17,7 @@
     </div>
     @include('components.alert')
     @foreach($questions as $question)
-        <div class="card mb-4">
+        <div class="card text-bg-dark shadow-lg mb-4">
             <div class="card-header">
                 <div class="row">
                     <div class="col">

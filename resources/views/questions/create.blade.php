@@ -3,7 +3,7 @@
 @section('content')
     @include('components.alert')
     <div class="row">
-        <div class="alert alert-secondary" id="liveAlertBtn" role="alert">
+        <div class="alert alert-success" role="alert">
             <h4 class="mb-1">
                 Writing a good question
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 24 24">
@@ -25,18 +25,25 @@
                 <label for="title" class="col-12 col-form-label">Title:</label>
                 <div class="col-12">
                     <input type="text" required placeholder="e.g. Is there an R function for finding the index of an element in a vector?" name="title" class="form-control @error('title') is-invalid @enderror" id="title">
+                    @error('title')
                     <div class="invalid-feedback">
-                        The title must be at least 15 characters.
+                        {{ $message }}
                     </div>
+                    @enderror
+
                 </div>
             </div>
             <div class="form-group mb-3">
                 <label for="description" class="col-12 col-form-label">What are the details of your problem?</label>
                 <div class="col-12">
-                    <textarea rows="8" style="overflow:auto;resize:none" name="description" class="form-control" id="description"></textarea>
+                    <textarea rows="8" style="overflow:auto;resize:none" name="description" class="form-control question-editor" id="description"></textarea>
                 </div>
             </div>
             <input type="submit" class="btn btn-primary" value="Submit Question">
         </form>
     </div>
 @endsection
+
+@push('head')
+    <script src="https://cdn.tiny.cloud/1/m73qz9kaacfqjjn0bt5rtinbphz5z7ool0o48fa454nf51ol/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+@endpush
